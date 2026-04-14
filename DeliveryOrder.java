@@ -105,7 +105,7 @@ public class DeliveryOrder {
                 "\nCreated Date: " + createdDate +
                 "\nDelivery Attempts: " + deliveryAttempts +
                 "\nFinal Fee: " + finalFee +
-                "\nAssigned Courier: " + assignedCourier.getName() + 
+                "\nAssigned Courier: " + (assignedCourier != null ? assignedCourier.getName() : "Unassigned") + 
                 "\n--------------------------------------------------------------------------------";
             }
 }
