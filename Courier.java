@@ -1,4 +1,4 @@
-public class Courier  extends HubPerson{
+public class Courier extends HubPerson{
     private String vehicleType;
     private int maxActiveOrders;
     private int yearsOfService;
