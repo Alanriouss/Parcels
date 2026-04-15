@@ -70,6 +70,9 @@ public class DeliveryOrder   {
             throw new DeliveryHubException("Order must be OUT_FOR_DELIVERY before marking delivered");
         }
         this.status = DeliveryStatus.DELIVERED;
+        if (this.assignedCourier != null){
+            this.assignedCourier.decreaseCurrentActiveOrder();
+        }
     }
 
     public void cancel() throws DeliveryHubException {
@@ -77,6 +80,9 @@ public class DeliveryOrder   {
             throw new DeliveryHubException("Order already finalized");
         }
         this.status = DeliveryStatus.CANCELLED;
+        if (this.assignedCourier != null){
+            this.assignedCourier.decreaseCurrentActiveOrder();
+        }
     }
 
     public void increaseDeliveryAttempts() throws DeliveryHubException {

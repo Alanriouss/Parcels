@@ -62,18 +62,11 @@ public class DeliveryHub {
         if(order == null){
             throw new DeliveryHubException("Order with code " + orderCode + " not found.");
         }
-        
-        int activeOrders = 0;
-        for (DeliveryOrder o : orders) {
-            if (c.equals(o.getAssignedCourier()) && (o.getStatus() != DeliveryStatus.DELIVERED  && o.getStatus() != DeliveryStatus.CANCELLED  && o.getStatus() != DeliveryStatus.RETURNED)) {
-                activeOrders++;
-            }
-        }
-
-        if (activeOrders >= c.getMaxActiveOrders()) {
+        if (c.getCurrentActiveOrder() >= c.getMaxActiveOrders()){
             throw new DeliveryHubException("Courier " + c.getName() + " has reached maximum active orders.");
         }
         order.assignCourier(c);
+        c.increaseCurrentActiveOrder();
     }
 
 

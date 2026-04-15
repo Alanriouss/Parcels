@@ -2,12 +2,13 @@ public class Courier extends HubPerson implements Comparable<Courier>{
     private String vehicleType;
     private int maxActiveOrders;
     private int yearsOfService;
-    
+    private int currentActiveOrder;
     public Courier(String personId , String name, int phoneNumber, String vehicleType,int maxActiveOrders,int yearsOfService){
         super(personId, name, phoneNumber);
         this.vehicleType = vehicleType;
         this.maxActiveOrders = maxActiveOrders;
         this.yearsOfService = yearsOfService;
+        this.currentActiveOrder = 0;
     }
     // Getter & Setters
     public String getVehicleType(){return vehicleType;}
@@ -22,6 +23,15 @@ public class Courier extends HubPerson implements Comparable<Courier>{
     public void setYearsOfService(int yearsOfService){
         this.yearsOfService = yearsOfService;
     }
+    public int getCurrentActiveOrder(){return currentActiveOrder;}
+    public void increaseCurrentActiveOrder(){
+        this.currentActiveOrder++;
+    }
+    public void decreaseCurrentActiveOrder(){
+        if (this.currentActiveOrder > 0){
+            this.currentActiveOrder--; 
+        }
+    }
     // Override
     @Override
     public String getRole(){
@@ -33,7 +43,7 @@ public class Courier extends HubPerson implements Comparable<Courier>{
     // Compare Courier
     @Override
     public int compareTo(Courier other){
-        int workloadCompare = Integer.compare(this.maxActiveOrders, other.maxActiveOrders);
+        int workloadCompare = Integer.compare(this.currentActiveOrder, other.currentActiveOrder);
         if (workloadCompare == 0){
             return this.getName().compareTo(other.getName());
         }
