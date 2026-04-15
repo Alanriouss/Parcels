@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class DeliveryHub {
     private String hubName;
@@ -127,6 +128,17 @@ public class DeliveryHub {
             System.out.println(o);
         }
     }
+    //Problem 5
+    public void sortCourierbyWorkload(){
+        ArrayList<Courier> couriers = new ArrayList<>();
+        for (HubPerson p : people){
+            if(p instanceof Courier){
+                couriers.add((Courier) p);
+            }
+        }
+        Collections.sort(couriers);
+    }
+    
 
     @Override
     public String toString() {
