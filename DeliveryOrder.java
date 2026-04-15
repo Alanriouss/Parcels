@@ -15,7 +15,7 @@ public class DeliveryOrder {
             throw new DeliveryHubException("Order code cannot be empty");
         }
         if (customer == null || parcel == null) {
-            throw new DeliveryHubException("Customer and Parcel cannot be null");
+            throw new DeliveryHubException("Customer or Parcel cannot be null");
         }
 
         this.orderCode = orderCode;
