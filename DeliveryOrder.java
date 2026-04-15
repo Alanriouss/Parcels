@@ -1,7 +1,7 @@
 
 import java.time.LocalDate;
 
-public class DeliveryOrder {
+public class DeliveryOrder   {
     private final String orderCode;
     private final Customer customer;
     private final Parcel parcel;
