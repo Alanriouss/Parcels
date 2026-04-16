@@ -138,7 +138,28 @@ public class DeliveryHub {
         }
         Collections.sort(couriers);
     }
-    
+    public void sortOrdersByUrgencyAndDate() {
+    ArrayList<DeliveryOrder> sortedOrders = new ArrayList<>(this.orders);
+    sortedOrders.sort((o1, o2) -> {
+        String type1 = o1.getParcel().getParcelType();
+        String type2 = o2.getParcel().getParcelType();
+
+        // If o1 is Express and o2 is Standard, o1 comes FIRST
+        if (type1.equals("Express") && type2.equals("Standard")) {
+            return -1; 
+        }
+        else if (type1.equals("Standard") && type2.equals("Express")) {
+            return 1; 
+        }
+        else {
+            return o1.getCreatedDate().compareTo(o2.getCreatedDate());
+        }
+    });
+    System.out.println("--- Orders Sorted by Urgency and Date ---");
+    for (DeliveryOrder order : sortedOrders) {
+        System.out.println(order);
+    }
+}
 
     @Override
     public String toString() {
