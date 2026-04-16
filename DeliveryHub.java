@@ -137,6 +137,9 @@ public class DeliveryHub {
             }
         }
         Collections.sort(couriers);
+        for (Courier c : couriers){
+            System.out.println(c);
+        }
     }
     public void sortOrdersByUrgencyAndDate() {
     ArrayList<DeliveryOrder> sortedOrders = new ArrayList<>(this.orders);
