@@ -141,6 +141,22 @@ public class DeliveryHub {
             System.out.println(c);
         }
     }
+    // Method returning the courier with the most active orders
+    public Courier getTopWorkloadCourier() {
+        Courier topCourier = null;
+        int maxOrders = -1;
+        
+        for (HubPerson p : people) {
+            if (p instanceof Courier) {
+                Courier c = (Courier) p;
+                if (c.getCurrentActiveOrder() > maxOrders) {
+                    maxOrders = c.getCurrentActiveOrder();
+                    topCourier = c;
+                }
+            }
+        }
+        return topCourier;
+    }
     public void sortOrdersByUrgencyAndDate() {
     ArrayList<DeliveryOrder> sortedOrders = new ArrayList<>(this.orders);
     sortedOrders.sort((o1, o2) -> {
@@ -163,6 +179,35 @@ public class DeliveryHub {
         System.out.println(order);
     }
 }
+// Integrated method to generate the full management report
+    public void generateManagementReport() {
+        System.out.println("          DELIVERY HUB MANAGEMENT REPORT          ");
+        System.out.println("==================================================");
+        
+        // 1. Revenue Summary
+        System.out.println("\n[1] REVENUE SUMMARY");
+        System.out.println("Estimated Open Revenue: $" + estimateOpenRevenue());
+        
+        // 2. Top Workload Courier
+        System.out.println("\n[2] TOP WORKLOAD COURIER");
+        Courier topCourier = getTopWorkloadCourier(); // The method we added previously
+        if (topCourier != null) {
+            System.out.println("Top Courier: " + topCourier.getName() + 
+                               " | Active Orders: " + topCourier.getCurrentActiveOrder());
+        } else {
+            System.out.println("No couriers available or assigned.");
+        }
+        
+        // 3. Sorted Orders
+        System.out.println("\n[3] ORDERS BY URGENCY AND DATE");
+        sortOrdersByUrgencyAndDate(); 
+        
+        // 4. Sorted Couriers
+        System.out.println("\n[4] COURIERS BY ACTIVE WORKLOAD");
+        sortCourierbyWorkload();
+        
+        System.out.println("==================================================\n");
+    }
 
     @Override
     public String toString() {
