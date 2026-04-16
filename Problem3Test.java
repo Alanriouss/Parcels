@@ -1,59 +1,61 @@
 public class Problem3Test {
     public static void main(String[] args) {
+        System.out.println("=== PROBLEM 3: DELIVERY ORDER STATE MANAGEMENT TEST ===\n");
+        Customer customer = new Customer("CUS-01", "Alice", 123456789, "Standard");
+        Courier courier = new Courier("COR-01", "Bob", 987654321, "Van", 5, 2);
+        
+        StandardParcel parcel1 = new StandardParcel(101, "Sender A", "Alice", 2.0, "Zone 1", false);
+        ExpressParcel parcel2 = new ExpressParcel(102, "Sender B", "Alice", 1.5, "Zone 1", 1);
+        StandardParcel parcel3 = new StandardParcel(103, "Sender C", "Alice", 5.0, "Zone 2", true);
 
-        System.out.println("=== PROBLEM 3 TEST ===");
-
-        Customer customer1 = new Customer("CUS-101", "Nguyen Van A", 123456, "Premium");
-        Courier courier1 = new Courier("COR-2001", "Nguyen Van C", 1357924, "Motorcycle", 3, 1);
-
-        StandardParcel standard1 = new StandardParcel(1001, "Alice Smith", "Bob Jones", 2.5, "Zone A", true);
-        StandardParcel standard2 = new StandardParcel(1002, "Charlie Brown", "Diana Prince", 5.0, "Zone B", false);
-        ExpressParcel express1 = new ExpressParcel(2001, "Eve Davis", "Frank Miller", 1.2, "Zone A", 1);
-
-        DeliveryOrder order1 = null;
-        DeliveryOrder order2 = null;
-        DeliveryOrder order3 = null;
-
-        // =====================================================
-        // ✔ Requirement 1: Create at least 3 orders
-        // =====================================================
         try {
-            order1 = new DeliveryOrder("ORD-001", customer1, standard1);
-            order2 = new DeliveryOrder("ORD-002", customer1, standard2);
-            order3 = new DeliveryOrder("ORD-003", customer1, express1);
+            System.out.println("--- 1. Creating 3 Orders ---");
+            DeliveryOrder order1 = new DeliveryOrder("ORD-001", customer, parcel1);
+            DeliveryOrder order2 = new DeliveryOrder("ORD-002", customer, parcel2);
+            DeliveryOrder order3 = new DeliveryOrder("ORD-003", customer, parcel3);
+            
+            System.out.println("Order 1 Status: " + order1.getStatus());
+            System.out.println("Order 2 Status: " + order2.getStatus());
+            System.out.println("Order 3 Status: " + order3.getStatus());
 
-            System.out.println("✅ Requirement 1 Passed: 3 orders created");
-
-        } catch (DeliveryHubException e) {
-            System.out.println("❌ Failed to create orders: " + e.getMessage());
-            return;
-        }
-
-        // =====================================================
-        // ✔ Requirement 2: Valid status change
-        // =====================================================
-        try {
-            order1.assignCourier(courier1);
+            System.out.println("\n--- 2. Demonstrating Valid Status Changes (Order 1) ---");
+            System.out.println("Initial Status: " + order1.getStatus());
+            
+            order1.assignCourier(courier);
+            System.out.println("After assignCourier(): " + order1.getStatus());
+            
             order1.startDelivery();
+            System.out.println("After startDelivery(): " + order1.getStatus());
+            
             order1.markAsDelivered();
+            System.out.println("After markAsDelivered(): " + order1.getStatus());
+            
+            System.out.println("Result: Valid status changes successful!");
 
-            System.out.println("✅ Requirement 2 Passed: Valid status flow");
+            System.out.println("\n--- 3. Demonstrating Invalid Status Change & Caught Exception (Order 2) ---");
+            System.out.println("Order 2 Current Status: " + order2.getStatus());
+            
+            try {
+                System.out.println("Attempting to start delivery without assigning a courier...");
+                order2.startDelivery(); 
+                
+                System.out.println("FAIL: Exception was not thrown!"); 
+            } catch (DeliveryHubException e) {
+                System.out.println("Result -> Caught Expected Exception: " + e.getMessage());
+            }
+
+            System.out.println("\n--- 4. Additional Invalid Transition Test (Order 1) ---");
+            try {
+                System.out.println("Attempting to cancel an order that is already DELIVERED...");
+                order1.cancel();
+            } catch (DeliveryHubException e) {
+                System.out.println("Result -> Caught Expected Exception: " + e.getMessage());
+            }
 
         } catch (DeliveryHubException e) {
-            System.out.println("❌ Valid flow failed: " + e.getMessage());
+            System.out.println("Unexpected Error during setup: " + e.getMessage());
         }
 
-        // =====================================================
-        // ✔ Requirement 3 & 4: Invalid + caught exception
-        // =====================================================
-        try {
-            order2.startDelivery(); // chưa assign courier → sai
-            System.out.println("❌ FAIL: Invalid transition allowed");
-
-        } catch (DeliveryHubException e) {
-            System.out.println("✅ Requirement 3 & 4 Passed: " + e.getMessage());
-        }
-
-        System.out.println("\n=== TEST COMPLETED ===");
+        System.out.println("\n=== PROBLEM 3 TEST COMPLETED ===");
     }
 }
