@@ -1,6 +1,6 @@
 package core;
 
-enum DeliveryStatus {
+public enum DeliveryStatus {
     CREATED,
     ASSIGNED,
     OUT_FOR_DELIVERY,

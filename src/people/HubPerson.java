@@ -1,6 +1,6 @@
 package people;
 
-abstract class HubPerson{
+public abstract class HubPerson{
     private String personId;
     private String name;
     private int phoneNumber;

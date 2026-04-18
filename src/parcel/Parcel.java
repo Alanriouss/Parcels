@@ -1,4 +1,5 @@
-abstract class Parcel {
+package parcel;
+public abstract class Parcel {
     private int trackingNumber;
     private String senderName;
     private String receiverName;

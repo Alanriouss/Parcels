@@ -1,3 +1,4 @@
+
 public class StandardParcel extends Parcel implements Chargeable {
     private boolean isFragile;
     public StandardParcel(int trackingNumber,String senderName,String receiverName,double weight,String destinationZone,boolean isFragile){

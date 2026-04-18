@@ -1,3 +1,4 @@
+package parcel;
 public class ExpressParcel extends Parcel implements Chargeable {
     private int priorityLevel;
     // Contructor
