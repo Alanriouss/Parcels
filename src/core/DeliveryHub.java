@@ -1,6 +1,7 @@
 package core;
 
 import java.util.ArrayList;
+import people.MembershipType;
 import java.util.Collections;
 
 import people.Courier;
@@ -37,6 +38,12 @@ public class DeliveryHub {
         for (DeliveryOrder order : orders) {
             if (order.getOrderCode().equals(o.getOrderCode())) {
                 throw new DeliveryHubException("Order with code " + o.getOrderCode() + " already exists.");
+            }
+            boolean isExistingActive = order.getStatus() != DeliveryStatus.DELIVERED && 
+                                   order.getStatus() != DeliveryStatus.CANCELLED && 
+                                   order.getStatus() != DeliveryStatus.RETURNED;
+            if (isExistingActive && order.getParcel().getTrackingNumber() == o.getParcel().getTrackingNumber()){
+                throw new DeliveryHubException("Tracking number " + o.getParcel().getTrackingNumber() + " is already active.");
             }
         }
         orders.add(o);
@@ -184,6 +191,43 @@ public class DeliveryHub {
         System.out.println(order);
     }
 }
+    public void printActiveOrders(){
+        for (DeliveryOrder o : orders){
+            // Compare using the DeliveryStatus enum, not Strings!
+            if (o.getStatus() != DeliveryStatus.DELIVERED && 
+                o.getStatus() != DeliveryStatus.CANCELLED && 
+                o.getStatus() != DeliveryStatus.RETURNED ){
+                
+                System.out.println(o);
+            }
+        }
+    }
+    public void printCompletedOrders(){
+        for (DeliveryOrder o : orders){
+            if (o.getStatus() == DeliveryStatus.DELIVERED){
+                System.out.println(o);
+            }
+        }
+    }
+    public void calculateTotalCompletedRevenue(){
+        double sum = 0;
+        for (DeliveryOrder o : orders){
+            if (o.getStatus() == DeliveryStatus.DELIVERED){
+                sum += o.getFinalFee();
+            }
+        }
+        System.out.println("Total complete Revenue: " + sum);
+    }
+    public void printPremiumCustomerRevenue(){
+        double sum = 0;
+        for (DeliveryOrder o : orders){
+            if (o.getStatus() == DeliveryStatus.DELIVERED && 
+                o.getCustomer().getMembershipType() == MembershipType.Premium){
+                sum += o.getFinalFee();
+            }
+        }
+        System.out.println("Total Revenue from Premium Customers: " + sum);
+    }
 // Integrated method to generate the full management report
     public void generateManagementReport() {
         System.out.println("          DELIVERY HUB MANAGEMENT REPORT          ");
