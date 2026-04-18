@@ -1,3 +1,4 @@
+package core;
 
 enum DeliveryStatus {
     CREATED,

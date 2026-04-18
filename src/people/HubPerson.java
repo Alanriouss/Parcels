@@ -1,3 +1,4 @@
+package people;
 
 abstract class HubPerson{
     private String personId;

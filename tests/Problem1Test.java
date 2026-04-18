@@ -1,3 +1,7 @@
+package tests;
+import people.Courier;
+import people.Customer;
+
 public class Problem1Test {
 
     public static void main(String[] args) {

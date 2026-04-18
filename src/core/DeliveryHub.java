@@ -1,6 +1,11 @@
+package core;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import people.Courier;
+import people.Customer;
+import people.HubPerson;
 
 public class DeliveryHub {
     private String hubName;

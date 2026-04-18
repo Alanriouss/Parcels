@@ -1,3 +1,4 @@
+package people;
 public class Courier extends HubPerson implements Comparable<Courier>{
     private String vehicleType;
     private int maxActiveOrders;

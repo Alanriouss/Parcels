@@ -1,5 +1,10 @@
+package core;
 
 import java.time.LocalDate;
+
+import Parcel;
+import people.Courier;
+import people.Customer;
 
 public class DeliveryOrder   {
     private final String orderCode;

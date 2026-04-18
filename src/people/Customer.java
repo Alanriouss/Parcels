@@ -1,3 +1,4 @@
+package people;
 public class Customer extends HubPerson{
     private String membershipType;
     

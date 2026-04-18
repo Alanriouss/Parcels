@@ -1,3 +1,10 @@
+import Parcel;
+import core.DeliveryHub;
+import core.DeliveryHubException;
+import core.DeliveryOrder;
+import people.Courier;
+import people.Customer;
+
 public class Problem4Test {
     public static void main(String[] args) {
         System.out.println("--- PROBLEM 4: STRICT ASSIGNMENT TEST ---");
