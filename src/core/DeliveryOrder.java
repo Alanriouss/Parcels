@@ -102,6 +102,9 @@ public class DeliveryOrder   {
         if (status == DeliveryStatus.OUT_FOR_DELIVERY || isFinalState()) {
             throw new DeliveryHubException("Cannot change fee during or after delivery");
         }
+        if(customer.getMembershipType() == "Premium"){
+            fee *= 0.9; // 10% discount for GOLD members
+        }
         this.finalFee = fee;
     }
 
