@@ -1,14 +1,14 @@
 package people;
 public class Customer extends HubPerson{
-    private String membershipType;
+    private MembershipType membershipType;
     
-    public Customer(String personId , String name, int phoneNumber, String membershipType){
+    public Customer(String personId , String name, int phoneNumber, MembershipType membershipType){
         super(personId, name, phoneNumber);
         this.membershipType = membershipType;
     }
     // Getter & Setter
-    public String getMembershipType(){return membershipType;}
-    public void setMembershipType(String membershipType){
+    public MembershipType getMembershipType(){return membershipType;}
+    public void setMembershipType(MembershipType membershipType){
         this.membershipType = membershipType;
     }
     // Get Role & To String
