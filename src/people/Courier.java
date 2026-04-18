@@ -7,7 +7,7 @@ public class Courier extends HubPerson implements Comparable<Courier>{
     public Courier(String personId , String name, int phoneNumber, String vehicleType,int maxActiveOrders,int yearsOfService){
         super(personId, name, phoneNumber);
         this.vehicleType = vehicleType;
-        this.maxActiveOrders = maxActiveOrders;
+        this.maxActiveOrders = 3;
         this.yearsOfService = yearsOfService;
         this.currentActiveOrder = 0;
     }

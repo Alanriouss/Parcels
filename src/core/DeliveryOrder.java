@@ -69,15 +69,41 @@ public class DeliveryOrder   {
     }
 
     public void markAsDelivered() throws DeliveryHubException {
+        // Check if courier is assigned
+        if (this.assignedCourier == null){
+            throw new DeliveryHubException("No courier assigned to this order");
+        }
+        // Check if order is out for delivery
         if (status != DeliveryStatus.OUT_FOR_DELIVERY) {
             throw new DeliveryHubException("Order must be OUT_FOR_DELIVERY before marking delivered");
         }
+        // Check if final fee is set
+        if (this.finalFee <=0){
+            throw new DeliveryHubException("Final fee must be set before marking delivered");
+        }
         this.status = DeliveryStatus.DELIVERED;
+        this.assignedCourier.decreaseCurrentActiveOrder();
+    }
+    public void markAsFailed() throws DeliveryHubException{
+        if (status != DeliveryStatus.OUT_FOR_DELIVERY) {
+            throw new DeliveryHubException("Order must be OUT_FOR_DELIVERY before marking failed");
+        }
+        this.status = DeliveryStatus.RETURNED;
         if (this.assignedCourier != null){
             this.assignedCourier.decreaseCurrentActiveOrder();
         }
+        this.deliveryAttempts++;
     }
-
+    public void retryDelivery() throws DeliveryHubException{
+        if (status != DeliveryStatus.FAILED) {
+            throw new DeliveryHubException("Order must be FAILED before retrying delivery");
+        }
+        if (this.deliveryAttempts >= 2) {
+            throw new DeliveryHubException("Maximum delivery attempts reached");
+        }
+        this.status = DeliveryStatus.OUT_FOR_DELIVERY;
+        System.out.println("Order " + this.orderCode + " is being retried. Attempt #" + (this.deliveryAttempts + 1));
+    }
     public void cancel() throws DeliveryHubException {
         if (isFinalState()) {
             throw new DeliveryHubException("Order already finalized");

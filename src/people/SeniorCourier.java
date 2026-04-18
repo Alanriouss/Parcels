@@ -4,6 +4,7 @@ public class SeniorCourier extends Courier {
     public SeniorCourier(String personId , String name, int phoneNumber, String vehicleType,int maxActiveOrders,int yearsOfService, double bonusRate){
         super(personId, name, phoneNumber, vehicleType, maxActiveOrders, yearsOfService);
         this.bonusRate = bonusRate;
+        this.setMaxActiveOrders(5);
     }
     // Getter & Setters
     public double getBonusRate(){return bonusRate;}
