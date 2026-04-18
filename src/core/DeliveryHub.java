@@ -229,17 +229,21 @@ public class DeliveryHub {
         System.out.println("Total Revenue from Premium Customers: " + sum);
     }
 // Integrated method to generate the full management report
+    // Integrated method to generate the full management report
     public void generateManagementReport() {
         System.out.println("          DELIVERY HUB MANAGEMENT REPORT          ");
         System.out.println("==================================================");
         
-        // 1. Revenue Summary
-        System.out.println("\n[1] REVENUE SUMMARY");
-        System.out.println("Estimated Open Revenue: $" + estimateOpenRevenue());
+        // 1. Active and Completed Orders
+        System.out.println("\n[1] ALL ACTIVE ORDERS");
+        printActiveOrders();
         
-        // 2. Top Workload Courier
-        System.out.println("\n[2] TOP WORKLOAD COURIER");
-        Courier topCourier = getTopWorkloadCourier(); // The method we added previously
+        System.out.println("\n[2] ALL COMPLETED ORDERS");
+        printCompletedOrders();
+        
+        // 3. Top Workload Courier
+        System.out.println("\n[3] TOP WORKLOAD COURIER");
+        Courier topCourier = getTopWorkloadCourier();
         if (topCourier != null) {
             System.out.println("Top Courier: " + topCourier.getName() + 
                                " | Active Orders: " + topCourier.getCurrentActiveOrder());
@@ -247,17 +251,25 @@ public class DeliveryHub {
             System.out.println("No couriers available or assigned.");
         }
         
-        // 3. Sorted Orders
-        System.out.println("\n[3] ORDERS BY URGENCY AND DATE");
+        // 4. Sorted Orders
+        System.out.println("\n[4] ORDERS BY URGENCY AND DATE");
         sortOrdersByUrgencyAndDate(); 
         
-        // 4. Sorted Couriers
-        System.out.println("\n[4] COURIERS BY ACTIVE WORKLOAD");
+        // 5. Sorted Couriers
+        System.out.println("\n[5] COURIERS BY ACTIVE WORKLOAD");
         sortCourierbyWorkload();
-        
-        System.out.println("==================================================\n");
-    }
 
+        // 6. Revenue Summary
+        System.out.println("\n[6] REVENUE SUMMARY");
+        System.out.println("Estimated Open Revenue: $" + estimateOpenRevenue());
+        calculateTotalCompletedRevenue();
+        
+        // 7. Custom Management Report
+        System.out.println("\n[7] CUSTOM REPORT: PREMIUM TIER INSIGHTS");
+        printPremiumCustomerRevenue();
+        
+        System.out.println("\n==================================================");
+    }
     @Override
     public String toString() {
         return "\n--------------------------------------------------------------------------------" +

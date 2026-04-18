@@ -88,7 +88,7 @@ public class DeliveryOrder   {
         if (status != DeliveryStatus.OUT_FOR_DELIVERY) {
             throw new DeliveryHubException("Order must be OUT_FOR_DELIVERY before marking failed");
         }
-        this.status = DeliveryStatus.RETURNED;
+        this.status = DeliveryStatus.FAILED;
         if (this.assignedCourier != null){
             this.assignedCourier.decreaseCurrentActiveOrder();
         }
