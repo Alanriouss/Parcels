@@ -91,23 +91,23 @@ public class Problem6Test {
         System.out.println("\n=== 8. Premium-Customer Discount Behavior & Valid Delivery Flow ===");
         try {
             // Process Order 1 (Standard Customer)
-            order1.startDelivery();
             double fee1 = ((Chargeable) order1.getParcel()).estimateDeliveryFee();
-            order1.setFinalFee(fee1); 
+            order1.setFinalFee(fee1); // Set fee FIRST
+            order1.startDelivery();   // Then start delivery
             order1.markAsDelivered();
             System.out.println("Standard Customer Final Fee: $" + order1.getFinalFee() + " (Expected $12.5)");
 
             // Process Order 2 (Premium Customer)
-            order2.startDelivery();
             double fee2 = ((Chargeable) order2.getParcel()).estimateDeliveryFee(); 
-            order2.setFinalFee(fee2); // Should automatically apply 10% discount inside DeliveryOrder
+            order2.setFinalFee(fee2); // Set fee FIRST (Should automatically apply 10% discount)
+            order2.startDelivery();   // Then start delivery
             order2.markAsDelivered();
             System.out.println("Premium Customer Final Fee: $" + order2.getFinalFee() + " (Expected $27.0 from $30.0 base)");
 
-            // Set Order 3 to out for delivery so it shows as active in the report
-            order3.startDelivery();
+            // Process Order 3
             double fee3 = ((Chargeable) order3.getParcel()).estimateDeliveryFee(); 
             order3.setFinalFee(fee3); 
+            order3.startDelivery();
 
             // Assign Order 4 to the Senior Courier so it isn't orphaned
             hub.assignCourier("O-004", seniorCourier);

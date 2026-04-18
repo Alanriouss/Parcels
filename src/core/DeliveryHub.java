@@ -120,8 +120,17 @@ public class DeliveryHub {
     public double estimateOpenRevenue() {
         double total = 0;
         for (DeliveryOrder o : orders) {
-            if (o.getStatus() != DeliveryStatus.DELIVERED && o.getStatus() != DeliveryStatus.CANCELLED && o.getStatus() != DeliveryStatus.RETURNED) {
-                total += o.getFinalFee();
+            // Only calculate for open orders
+            if (o.getStatus() != DeliveryStatus.DELIVERED && 
+                o.getStatus() != DeliveryStatus.CANCELLED && 
+                o.getStatus() != DeliveryStatus.RETURNED) {
+                
+                // If it has a final fee set, use it. Otherwise, estimate it from the parcel.
+                if (o.getFinalFee() > 0) {
+                    total += o.getFinalFee();
+                } else if (o.getParcel() instanceof parcel.Chargeable) {
+                    total += ((parcel.Chargeable) o.getParcel()).estimateDeliveryFee();
+                }
             }
         }
         return total;
